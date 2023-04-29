@@ -1,9 +1,15 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Person {
     DNA [] dna = new DNA[100];
 
-    String eyeColor;
+    Colour eyeColor;
+    Gender gender;
+
+    int lifeSpan;
+    int maturity;
 
     Random random = new Random();
 
@@ -15,40 +21,64 @@ public class Person {
                 dna[i] = DNA.getDNAbyint(random.nextInt(4));
             }
         }
-        String tempColor = String.format("%06x",setEyeColor());
-        eyeColor = tempColor.length() > 6 ? tempColor.substring(1) : tempColor;
-        eyeColor = eyeColor.substring(0,2) + ";" + eyeColor.substring(2,4) + ";" + eyeColor.substring(4) + "m";
+        setupFenotype();
+    }
+
+    public Person(Person m,Person f){
+        for (int i = 0;i < dna.length;i++){
+            DNA [] rna = {m.dna[i],f.dna[i]};
+            dna[i] = rna[random.nextInt(rna.length)];
+        }
+        setupFenotype();
+    }
+
+    private void setupFenotype(){
+        eyeColor = setEyeColor();
+        setGender();
+        lifeSpan = Age.Lifespan(Arrays.copyOfRange(dna,5,15));
+        maturity = Age.Maturity(Arrays.copyOfRange(dna,17,21));
+    }
+
+    private void setGender(){
+        if (dna[0].equals(DNA.X)){
+            gender = Gender.F;
+        }else {
+            gender = Gender.M;
+        }
     }
 
     //Fenotyp koloru oczu
-    private int setEyeColor(){
-        int first;
-        int second;
+    private Colour setEyeColor(){
+        Colour first;
+        Colour second;
         DNA [] gene = {dna[2],dna[3]};
         first = setupColor(gene[0]);
         second = setupColor(gene[1]);
 
-        return gene[0].equals(gene[1]) ? first : first + second;
+        return gene[0].equals(gene[1]) ? first : first.addColour(second);
     }
 
-    private int setupColor(DNA gene){
+    private Colour setupColor(DNA gene){
         if (gene.equals(DNA.A)){
-            return 0x593310; //brązowy
+            return new Colour(100,70,0); //brązowy
         }else if (gene.equals(DNA.C)){
-            return 0x00430c; //zielony
+            return new Colour(0,255,0); //zielony
         }else if (gene.equals(DNA.G)){
-            return 0x0043ff; //niebieski
+            return new Colour(0,0,255); //niebieski
         }else {
-            return 0xff0000; //czerwony
+            return new Colour(255,0,0); //czerwony
         }
     }
 
-    public String getEyeColor(){
+    public Colour getEyeColor(){
         return eyeColor;
     }
 
     @Override
     public String toString() {
-        return "\u001B[38;2;" + eyeColor + "O" + "\u001B[0m";
+        String result = "\u001B[38;2;" + eyeColor.toString() + "\u25c9" + "\u001B[0m" + " ";
+        result = result + gender.getSymbol() + " ";
+        result = result + "Lifespan : " + lifeSpan + " y Maturity : " + maturity + " y ";
+        return result;
     }
 }
