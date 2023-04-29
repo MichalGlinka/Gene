@@ -3,32 +3,45 @@ import java.util.Random;
 public class Person {
     DNA [] dna = new DNA[100];
 
-    String eyeColor;
+    int eyeColor;
 
     Random random = new Random();
 
-    public Person(DNA[] dna) {
+    public Person() {
         for (int i = 0; i < dna.length; i++) {
-            dna[i] = DNA.getDNAbyint(random.nextInt(4));
+            if (i == 0) {
+                dna[i] = DNA.getDNAbyint(random.nextInt(2) + 4);
+            } else {
+                dna[i] = DNA.getDNAbyint(random.nextInt(4));
+            }
         }
+        eyeColor = setEyeColor();
     }
 
-    private void setEyeColor(){
-        String first;
-        String second;
+    //Fenotyp koloru oczu
+    private int setEyeColor(){
+        int first;
+        int second;
         DNA [] gene = {dna[2],dna[3]};
-        if (gene[0].equals(DNA.A)){
-            first = "593310"; //brązowy
-        }else if (gene[0].equals(DNA.C)){
-            first = "00430c"; //zielony
-        }else if (gene[0].equals(DNA.G)){
-            first = "0043ff"; //niebieski
+        first = setupColor(gene[0]);
+        second = setupColor(gene[1]);
+
+        return gene[0].equals(gene[1]) ? first : first + second;
+    }
+
+    private int setupColor(DNA gene){
+        if (gene.equals(DNA.A)){
+            return 0x593310; //brązowy
+        }else if (gene.equals(DNA.C)){
+            return 0x00430c; //zielony
+        }else if (gene.equals(DNA.G)){
+            return 0x0043ff; //niebieski
         }else {
-            first = "ff0000"; //czerwony
+            return 0xff0000; //czerwony
         }
     }
 
-    private String getEyeColor(){
+    public int getEyeColor(){
         return eyeColor;
     }
 }

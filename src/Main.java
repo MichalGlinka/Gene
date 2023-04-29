@@ -1,5 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Person person = new Person();
+        for (DNA dna : person.dna) {
+            System.out.print(dna);
+        }
+        System.out.println(person.getEyeColor());
     }
 }
