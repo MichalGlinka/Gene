@@ -4,6 +4,7 @@ public class Main {
         for (DNA dna : person.dna) {
             System.out.print(dna);
         }
-        System.out.println(person.getEyeColor());
+        System.out.println();
+        System.out.print(person);
     }
 }

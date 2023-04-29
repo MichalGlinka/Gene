@@ -3,7 +3,7 @@ import java.util.Random;
 public class Person {
     DNA [] dna = new DNA[100];
 
-    int eyeColor;
+    String eyeColor;
 
     Random random = new Random();
 
@@ -15,7 +15,9 @@ public class Person {
                 dna[i] = DNA.getDNAbyint(random.nextInt(4));
             }
         }
-        eyeColor = setEyeColor();
+        String tempColor = String.format("%06x",setEyeColor());
+        eyeColor = tempColor.length() > 6 ? tempColor.substring(1) : tempColor;
+        eyeColor = eyeColor.substring(0,2) + ";" + eyeColor.substring(2,4) + ";" + eyeColor.substring(4) + "m";
     }
 
     //Fenotyp koloru oczu
@@ -41,7 +43,12 @@ public class Person {
         }
     }
 
-    public int getEyeColor(){
+    public String getEyeColor(){
         return eyeColor;
+    }
+
+    @Override
+    public String toString() {
+        return "\u001B[38;2;" + eyeColor + "O" + "\u001B[0m";
     }
 }
