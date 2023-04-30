@@ -1,10 +1,11 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Person {
     int age;
     DNA [] dna = new DNA[100];
+
+    int feed;
 
     Colour eyeColor;
     Gender gender;

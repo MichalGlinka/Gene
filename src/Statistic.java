@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 
 public class Statistic {
-    public String getStats(ArrayList<Person> people){
+    public String getStats(ArrayList<Person> people,Enviorment enviorment){
         try {
             return "Population : " + people.size() + "\n" + getGenderData(people) + "\n" + getAvg(people,"life") +
-                    "\n" + getAvg(people,"mature") + "\n" + getSkinColor(people);
+                    "\n" + getAvg(people,"mature") + "\n" + getSkinColor(people) +
+                    "\nEnviorment :\nfood : " + enviorment.food;
         }catch (ArithmeticException e){
-            return "Population 0";
+            return "Population 0" + "\nEnviorment :\nfood : " + enviorment.food;
         }
     }
 

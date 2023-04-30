@@ -14,6 +14,7 @@ public class Main {
         for (int i = 0; i < startpopulation; i++) {
             people.add(new Person());
         }
+        Enviorment enviorment = new Enviorment(people);
         boolean run = true;
         do{
             for (Menu value : Menu.values()) {
@@ -28,7 +29,7 @@ public class Main {
             }
             switch (menu){
                 case EXIT -> run = false;
-                case STAT -> System.out.println(statistic.getStats(people));
+                case STAT -> System.out.println(statistic.getStats(people,enviorment));
                 case RAND -> {
                     int r = random.nextInt(people.size());
                     System.out.println("Object " + r + "\n" + people.get(r).toString());
@@ -61,6 +62,7 @@ public class Main {
                             iterator.remove();
                         }
                     }
+                    enviorment.growth();
                 }
                 case START -> {
 
