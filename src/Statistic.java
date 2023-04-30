@@ -1,9 +1,13 @@
 import java.util.ArrayList;
-import java.util.function.Function;
 
 public class Statistic {
     public String getStats(ArrayList<Person> people){
-        return getGenderData(people) + "\n" + getAvg(people,"life") + "\n" + getAvg(people,"mature");
+        try {
+            return "Population : " + people.size() + "\n" + getGenderData(people) + "\n" + getAvg(people,"life") +
+                    "\n" + getAvg(people,"mature") + "\n" + getSkinColor(people);
+        }catch (ArithmeticException e){
+            return "Population 0";
+        }
     }
 
     private String getGenderData(ArrayList<Person> people){
@@ -37,5 +41,28 @@ public class Statistic {
             result = "AVG LifeSpan : ";
         }
         return result + avg;
+    }
+
+    private String getSkinColor(ArrayList<Person> people){
+        int white = 0;
+        int yellow = 0;
+        int brown = 0;
+        int black = 0;
+        for (Person person : people) {
+            if (person.skinColor.equals(Color.WHITE.colour)){
+                white++;
+            }else if (person.skinColor.equals(Color.YELLOW.colour)){
+                yellow++;
+            }else if (person.skinColor.equals(Color.BROWN.colour)){
+                brown++;
+            }else {
+                black++;
+            }
+        }
+        return "\u001B[38;2;" + Color.WHITE.colour.toString() +  "\u25a0\u001b[0m" + " - " + white + "\n\u001B[38;2;" +
+                Color.YELLOW.colour.toString() + "\u25a0\u001b[0m" + " - " + yellow + "\n\u001B[38;2;" +
+                Color.BROWN.colour.toString() + "\u25a0\u001b[0m" +  " - " + brown + "\n\u001B[38;2;" +
+                Color.BLACK.colour.toString() + "\u25a0\u001b[0m" + " - " + black;
+
     }
 }

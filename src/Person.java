@@ -3,13 +3,20 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Person {
+    int age;
     DNA [] dna = new DNA[100];
 
     Colour eyeColor;
     Gender gender;
 
+    Colour skinColor;
+
     int lifeSpan;
     int maturity;
+
+    int strenght;
+
+    boolean agression;
 
     Random random = new Random();
 
@@ -22,6 +29,7 @@ public class Person {
             }
         }
         setupFenotype();
+        age = 1;
     }
 
     public Person(Person m,Person f){
@@ -30,13 +38,40 @@ public class Person {
             dna[i] = rna[random.nextInt(rna.length)];
         }
         setupFenotype();
+        age = 0;
     }
 
+    public void nextYear(){
+        age++;
+    }
     private void setupFenotype(){
         eyeColor = setEyeColor();
         setGender();
         lifeSpan = Age.Lifespan(Arrays.copyOfRange(dna,5,15));
         maturity = Age.Maturity(Arrays.copyOfRange(dna,17,21));
+        setupStrenght();
+        setSkinColor();
+    }
+    private void setSkinColor(){
+        if (dna[42].equals(DNA.A)){
+            skinColor = Color.WHITE.colour;
+        }else if (dna[42].equals(DNA.C)){
+            skinColor = Color.YELLOW.colour;
+        }else if (dna[42].equals(DNA.G)){
+            skinColor = Color.BROWN.colour;
+        }else {
+            skinColor = Color.BLACK.colour;
+        }
+    }
+
+
+    //#robiomrePopijakumkurtwa
+    private void setupStrenght(){
+        int strenght = 0;
+        for (int i = 23; i < 40; i++) {
+            strenght += (dna[i]).ordinal();
+        }
+        this.strenght = strenght;
     }
 
     private void setGender(){
@@ -76,9 +111,9 @@ public class Person {
 
     @Override
     public String toString() {
-        String result = "\u001B[38;2;" + eyeColor.toString() + "\u25c9" + "\u001B[0m" + " ";
-        result = result + gender.getSymbol() + " ";
-        result = result + "Lifespan : " + lifeSpan + " y Maturity : " + maturity + " y ";
-        return result;
+        return "\u001B[38;2;" + eyeColor.toString() + "\u25c9\u001B[0m" + " "
+                + gender.getSymbol() + " "
+                + "Lifespan : " + lifeSpan + " y Maturity : " + maturity + " y Strength : " + strenght + " "
+                + "\u001B[38;2;" + skinColor.toString() + "\u25a0\u001b[0m ";
     }
 }

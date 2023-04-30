@@ -7,4 +7,8 @@ public class Inheritance {
             people.add(new Person(people.get(m),people.get(f)));
         }
     }
+
+    public void newBornRandom(ArrayList<Person> people){
+
+    }
 }

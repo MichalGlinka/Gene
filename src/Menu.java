@@ -1,5 +1,6 @@
 public enum Menu {
-    EXIT("Exit"),STAT("Statistic"),RAND("Random"),EXACT("Exact Object"),PAIR("Pair Objects");
+    EXIT("Exit"),STAT("Statistic"),RAND("Random"),EXACT("Exact Object"),PAIR("Pair Objects"),
+    NEWGEN("Generate new population"),NEWYEAR("New year"),START("Start simulation");
 
     private String desc;
     Menu(String desc) {

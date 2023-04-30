@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -47,6 +44,26 @@ public class Main {
                     System.out.println("F:");
                     int f = scanner.nextInt();
                     inheritance.newBorn(people,m,f);
+                }
+                case NEWGEN -> {
+                    System.out.println("How many?");
+                    int howMany = scanner.nextInt();
+                    people.clear();
+                    for (int i = 0; i < howMany; i++) {
+                        people.add(new Person());
+                    }
+                }
+                case NEWYEAR -> {
+                    for (Iterator<Person> iterator = people.iterator(); iterator.hasNext();){
+                        Person p = iterator.next();
+                        p.nextYear();
+                        if (p.age > p.lifeSpan){
+                            iterator.remove();
+                        }
+                    }
+                }
+                case START -> {
+
                 }
             }
         }while (run);
