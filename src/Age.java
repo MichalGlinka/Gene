@@ -10,7 +10,7 @@ public class Age {
     static public int Maturity(DNA [] gene){
         int maturity = 0;
         for (DNA dna : gene){
-            maturity = maturity + (dna.ordinal() - 1);
+            maturity = maturity + (dna.ordinal());
         }
         return maturity > 0 ? maturity : 1;
     }

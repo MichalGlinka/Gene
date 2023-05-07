@@ -31,6 +31,7 @@ public class Person {
         }
         setupFenotype();
         age = 1;
+        feed = 2;
     }
 
     public Person(Person m,Person f){
@@ -39,11 +40,28 @@ public class Person {
             dna[i] = rna[random.nextInt(rna.length)];
         }
         setupFenotype();
-        age = 0;
+        age = 1;
+        feed = 2;
     }
 
-    public void nextYear(){
+    public void pickupFood(Enviorment enviorment){
+        int modifier = dna[46].ordinal() + dna[47].ordinal();
+        int pickup = random.nextInt(modifier + 1);
+        if (enviorment.food > 1){
+            if (enviorment.food < pickup){
+                this.feed += enviorment.food;
+                enviorment.food = 0;
+            }else {
+                this.feed += pickup;
+                enviorment.food -= pickup;
+            }
+        }
+    }
+
+    public void nextYear(Enviorment enviorment){
         age++;
+        feed--;
+        pickupFood(enviorment);
     }
     private void setupFenotype(){
         eyeColor = setEyeColor();
@@ -112,9 +130,9 @@ public class Person {
 
     @Override
     public String toString() {
-        return "\u001B[38;2;" + eyeColor.toString() + "\u25c9\u001B[0m" + " "
-                + gender.getSymbol() + " "
-                + "Lifespan : " + lifeSpan + " y Maturity : " + maturity + " y Strength : " + strenght + " "
-                + "\u001B[38;2;" + skinColor.toString() + "\u25a0\u001b[0m ";
+        return "\u001B[38;2;" + eyeColor.toString() + "\u25c9\u001B[0m" + "\n "
+                + gender.getSymbol() + "\n "
+                + "Lifespan : " + lifeSpan + "\n y Maturity : " + maturity + "\n y Strength : " + strenght + "\n "
+                + "\u001B[38;2;" + skinColor.toString() + "\u25a0\u001b[0m " + "\nFeed : " + feed + "\nAge : " + age;
     }
 }

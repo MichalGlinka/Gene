@@ -5,9 +5,9 @@ public class Statistic {
         try {
             return "Population : " + people.size() + "\n" + getGenderData(people) + "\n" + getAvg(people,"life") +
                     "\n" + getAvg(people,"mature") + "\n" + getSkinColor(people) +
-                    "\nEnviorment :\nfood : " + enviorment.food;
+                    "\nEnviorment :\nfood : " + enviorment.food + "\nYear = " + enviorment.year;
         }catch (ArithmeticException e){
-            return "Population 0" + "\nEnviorment :\nfood : " + enviorment.food;
+            return "Population 0" + "\nEnviorment :\nfood : " + enviorment.food + "\nYear = " + enviorment.year;
         }
     }
 
@@ -42,6 +42,14 @@ public class Statistic {
             result = "AVG LifeSpan : ";
         }
         return result + avg;
+    }
+
+    public int getAVGMat(ArrayList<Person> people){
+        int cumVal = 0;
+        for (Person person : people) {
+            cumVal += person.maturity;
+        }
+        return cumVal/people.size();
     }
 
     private String getSkinColor(ArrayList<Person> people){
